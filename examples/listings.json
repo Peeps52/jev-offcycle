@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Off-Cycle Investment Intern",
+    "organisation": "Northgate Ventures",
+    "location": "London, UK",
+    "start_date": "February 2027",
+    "duration": "6 months",
+    "source": "uk-finance",
+    "description": "We are a pre-seed and seed fund investing in B2B software across Europe. The off-cycle intern will support sourcing, run first-call screens with founders, and build market maps. You will sit with the investment team and own your own pipeline. Previous off-cycle interns have gone on to analyst roles with us.",
+    "url": "https://example.invalid/northgate-offcycle"
+  },
+  {
+    "title": "Summer Analyst Programme 2027",
+    "organisation": "Meridian Capital Partners",
+    "location": "London, UK",
+    "start_date": "June 2027",
+    "duration": "10 weeks",
+    "source": "uk-finance",
+    "description": "Our flagship summer programme for penultimate-year students. Ten weeks across our growth equity and buyout teams, with a structured training week and a return-offer decision at the end.",
+    "url": "https://example.invalid/meridian-summer"
+  },
+  {
+    "title": "Venture Capital Intern (Off-Cycle)",
+    "organisation": "Lattice Fund",
+    "location": "San Francisco, CA, USA",
+    "start_date": "March 2027",
+    "duration": "4 months",
+    "source": "us-tech",
+    "description": "Seed-stage fund backing developer tools. Applicants must have existing US work authorisation; we are unable to sponsor visas for this position. You will run technical diligence on infrastructure companies and write investment memos.",
+    "url": "https://example.invalid/lattice-sf"
+  },
+  {
+    "title": "Investment Intern, Deep Tech",
+    "organisation": "Aperture Seed",
+    "location": "London, UK",
+    "start_date": "September 2026",
+    "duration": "6 months",
+    "source": "uk-tech",
+    "description": "Six-month off-cycle placement with a pre-seed deep tech fund. You will assess technical founders' claims, read papers, and run diligence alongside our technical partners. Some Python for data work on our portfolio dashboard.",
+    "url": "https://example.invalid/aperture-deeptech"
+  },
+  {
+    "title": "Graduate Analyst Scheme",
+    "organisation": "Halberd Asset Management",
+    "location": "London, UK",
+    "start_date": "September 2027",
+    "duration": "Permanent",
+    "source": "uk-finance",
+    "description": "Two-year rotational graduate scheme across public equities research and portfolio construction. Open to final-year students graduating in 2027.",
+    "url": "https://example.invalid/halberd-grad"
+  },
+  {
+    "title": "Investment Team Intern",
+    "organisation": "Cobalt Ventures",
+    "location": "London, UK",
+    "start_date": "",
+    "duration": "",
+    "source": "uk-finance",
+    "description": "We are looking for an intern to join our investment team. Early-stage focus. Get in touch with a CV and a note on what you find interesting in European software.",
+    "url": "https://example.invalid/cobalt-vague"
+  }
+]
