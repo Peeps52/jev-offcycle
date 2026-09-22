@@ -138,11 +138,36 @@ jev_offcycle/
 Errors are raised, never swallowed. A filter that silently drops a listing on
 an API error is a filter you cannot trust.
 
+## Tests
+
+```bash
+python3 -m pytest tests/ -q              # 13 offline, free
+JEV_LIVE=1 python3 -m pytest tests/ -q   # + live fixture, ~$0.0003
+```
+
+The offline tests carry most of the weight. Every bug found in review was in
+the **banding logic**, not the model — uncertainty being read as falsity — and
+that needs no API call to catch. They also pin the API contract: `instructions`
+not `prompt`, `criteria` on every `choice`, a no-match option, ordered `score`
+criteria, and 0-indexed score levels.
+
+The live arm asserts *verdicts*, not probabilities. Drift in the third decimal
+as the model updates is expected; a listing changing verdict is a regression.
+
+## Use as a Claude Code skill
+
+`skills/jev-offcycle/SKILL.md` ships alongside the library, so Claude Code can
+drive it conversationally. The skill carries the interpretation rules that are
+easy to get wrong: a `noul` of 0.5 is *uncertain* not *medium*, `confidence`
+measures distribution concentration rather than correctness, and `score`
+answers are 0-indexed over their criteria.
+
 ## Status
 
 Early. Classification is tested against the six-listing fixture in `examples/`,
 which includes deliberate traps: a summer programme labelled as an analyst role,
 an off-cycle role that needs US authorisation, a role starting too early, and a
-posting with no date at all. There is no crawler yet — feed it JSON.
+posting with no date at all. **There is no crawler yet — feed it JSON.** That is
+the obvious next piece.
 
 MIT.

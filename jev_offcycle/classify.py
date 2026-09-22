@@ -83,13 +83,25 @@ def _read(d: Decision) -> dict[str, Any]:
             }
         elif t == "score":
             # Score answers are 0-indexed over the ordered criteria: N levels
-            # span 0..N-1. A 2.4 over 4 levels sits between levels 2 and 3 --
-            # it is NOT 2.4 out of 4.
+            # span 0..N-1. A 2.8 over 4 levels sits between levels 2 and 3 --
+            # it is NOT 2.8 out of 4. Keep `probabilities` and `confidence`:
+            # a 2.8 split 0.2/0.8 across two adjacent levels means something
+            # different from one spread thinly over four.
             out[qid] = {
                 "level": round(float(a.get("score", 0)), 2),
                 "legend": a.get("legend"),
+                "probabilities": a.get("probabilities"),
+                "confidence": round(float(a.get("confidence", 0)), 3),
             }
     return out
+
+
+def _score_level(d: Decision, qid: str) -> tuple[float, int]:
+    """(level, n_levels) for a `score` answer. Level is 0-indexed."""
+    a = d.answers.get(qid)
+    if not a or a.get("type") != "score":
+        raise JevError(f"question {qid!r} is not a score answer: {a!r}")
+    return float(a.get("score", 0.0)), len(a.get("legend") or {}) or 1
 
 
 def classify(listing: Listing, profile: CandidateProfile, client: JevClient | None = None) -> Result:
@@ -135,6 +147,17 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
     # Off-cycle is weighted hardest: it is the whole premise of the search and
     # the thing no other tool checks.
     score = 0.5 * offcycle + 0.3 * sector + 0.2 * early
+
+    # Technical depth was previously computed and then ignored -- an API call
+    # paid for on every listing that changed nothing. It is a modest bonus,
+    # not a gate: a commercial sourcing role at the right fund is still worth
+    # seeing, it just ranks below one with real diligence work.
+    level, n_levels = _score_level(decision, "technical_depth")
+    if n_levels > 1:
+        technical = level / (n_levels - 1)  # 0-indexed levels -> 0..1
+        score = min(1.0, score * (1.0 + 0.15 * technical))
+        if technical >= 0.66:
+            reasons.append(f"technical role (level {level:.1f}/{n_levels - 1})")
 
     kind, kind_conf = decision.choice("role_kind")
     if kind in ("summer_internship", "graduate_scheme", "permanent_role") and kind_conf > 0.7:

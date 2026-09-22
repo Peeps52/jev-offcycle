@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import statistics
 import sys
 from pathlib import Path
 
@@ -50,9 +51,16 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{e}", file=sys.stderr)
         return 2
 
-    results, total_cost, total_ms = [], 0.0, 0.0
+    known = set(Listing.__dataclass_fields__)
+    results, total_cost, total_ms, latencies = [], 0.0, 0.0, []
     for item in raw:
-        listing = Listing(**item)
+        # Ignore unknown keys rather than dying on the whole run: real job
+        # feeds carry extra fields, and one stray key should not cost you the
+        # other 200 listings.
+        extra = set(item) - known
+        if extra:
+            print(f"   (ignoring unknown fields: {', '.join(sorted(extra))})", file=sys.stderr)
+        listing = Listing(**{k: v for k, v in item.items() if k in known})
         try:
             r = classify(listing, DEFAULT_PROFILE, client)
         except JevError as e:
@@ -63,6 +71,7 @@ def main(argv: list[str] | None = None) -> int:
         results.append(r)
         total_cost += r.cost_usd
         total_ms += r.latency_ms
+        latencies.append(r.latency_ms)
 
     results.sort(key=lambda r: r.score, reverse=True)
 
@@ -92,7 +101,6 @@ def main(argv: list[str] | None = None) -> int:
         if hidden:
             print(f"\n  ({hidden} rejected, --all to show)")
 
-    n = len(results) or 1
     print(
         f"\n{len(results)} listings · "
         f"{sum(r.verdict == 'shortlist' for r in results)} shortlist · "
@@ -100,10 +108,13 @@ def main(argv: list[str] | None = None) -> int:
         f"{sum(r.verdict == 'reject' for r in results)} reject",
         file=sys.stderr,
     )
-    print(
-        f"${total_cost:.6f} total · {total_ms / n:.0f}ms median-ish per listing",
-        file=sys.stderr,
-    )
+    if latencies:
+        med = statistics.median(latencies)
+        print(
+            f"${total_cost:.6f} total · {med:.0f}ms median · "
+            f"{total_cost / len(latencies):.6f}/listing",
+            file=sys.stderr,
+        )
     return 0
 
 

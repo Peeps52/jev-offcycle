@@ -1,0 +1,10 @@
+{
+  "name": "jev-offcycle",
+  "version": "0.1.0",
+  "description": "Filter job listings for off-cycle early-stage VC and technical roles using TypeSafe Jev. Returns shortlist/review/reject with calibrated probabilities and named reasons.",
+  "author": { "name": "Francesco Nagel" },
+  "homepage": "https://github.com/Peeps52/jev-offcycle",
+  "repository": "https://github.com/Peeps52/jev-offcycle",
+  "license": "MIT",
+  "keywords": ["jev", "typesafe", "jobs", "off-cycle", "venture-capital", "internships", "classification", "decisions"]
+}
