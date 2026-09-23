@@ -25,6 +25,9 @@ DEFAULT_PROFILE = CandidateProfile(
         "early-stage technology investing",
         "startup accelerators",
     ],
+    # Which programme types you want. Add "summer_internship",
+    # "placement_year", "spring_week", "graduate_scheme" to widen the search.
+    target_programmes=("offcycle_internship",),
     min_months=3,
     max_months=12,
 )

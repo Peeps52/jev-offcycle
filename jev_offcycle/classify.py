@@ -140,13 +140,23 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
         reasons.append("no start date given — confirm timing before applying")
 
     # --- fit score ------------------------------------------------------
-    offcycle = decision.noul("is_offcycle")
     sector = decision.noul("is_target_sector")
     early = decision.noul("is_early_stage")
+    kind, kind_conf = decision.choice("role_kind")
 
-    # Off-cycle is weighted hardest: it is the whole premise of the search and
-    # the thing no other tool checks.
-    score = 0.5 * offcycle + 0.3 * sector + 0.2 * early
+    # Programme match replaces the old `is_offcycle` noul. The probability
+    # mass on the wanted types IS the match strength -- a listing Jev puts at
+    # 0.7 offcycle / 0.3 summer scores 0.7 when you want off-cycle, without a
+    # second question to ask or a threshold to tune.
+    probs = decision.probabilities("role_kind")
+    wanted = set(profile.target_programmes)
+    programme = sum(p for k, p in probs.items() if k in wanted) if probs else (
+        1.0 if kind in wanted else 0.0
+    )
+
+    # Programme match is weighted hardest: it is the premise of the search and
+    # the thing no other tool models at all.
+    score = 0.5 * programme + 0.3 * sector + 0.2 * early
 
     # Technical depth was previously computed and then ignored -- an API call
     # paid for on every listing that changed nothing. It is a modest bonus,
@@ -159,16 +169,15 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
         if technical >= 0.66:
             reasons.append(f"technical role (level {level:.1f}/{n_levels - 1})")
 
-    kind, kind_conf = decision.choice("role_kind")
-    if kind in ("summer_internship", "graduate_scheme", "permanent_role") and kind_conf > 0.7:
+    if kind not in wanted and kind != "unclear" and kind_conf > 0.7:
         score *= 0.3
         reasons.append(f"classified {kind} (conf {kind_conf:.2f})")
     elif kind == "unclear":
-        reasons.append("role type unclear from posting")
+        reasons.append("programme type unclear from posting")
 
     lo, hi = REVIEW_BAND
-    if lo <= offcycle <= hi:
-        reasons.append(f"off-cycle status uncertain (p={offcycle:.2f})")
+    if lo <= programme <= hi:
+        reasons.append(f"programme match uncertain (p={programme:.2f})")
         verdict: Verdict = "review"
     elif forced_review and score >= lo:
         verdict = "review"
@@ -178,10 +187,12 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
         verdict = "review"
     else:
         verdict = "reject"
-        reasons.append(f"weak fit (off-cycle {offcycle:.2f}, sector {sector:.2f})")
+        reasons.append(f"weak fit ({kind} {programme:.2f}, sector {sector:.2f})")
 
     if verdict == "shortlist":
-        reasons.insert(0, f"off-cycle {offcycle:.2f} · sector {sector:.2f} · early-stage {early:.2f}")
+        reasons.insert(
+            0, f"{kind} {programme:.2f} · sector {sector:.2f} · early-stage {early:.2f}"
+        )
 
     return Result(
         listing=listing,

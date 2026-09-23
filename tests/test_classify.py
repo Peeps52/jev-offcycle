@@ -49,13 +49,13 @@ class _FakeClient:
 
 def _full(**over):
     base = {
-        "is_offcycle": {"type": "noul", "noul": 0.95},
         "is_target_sector": {"type": "noul", "noul": 0.95},
         "is_early_stage": {"type": "noul", "noul": 0.9},
         "starts_too_early": {"type": "noul", "noul": 0.05},
         "has_visa_barrier": {"type": "noul", "noul": 0.05},
         "start_date_stated": {"type": "noul", "noul": 0.95},
-        "role_kind": {"type": "choice", "choice": "offcycle_internship", "confidence": 0.95},
+        "role_kind": {"type": "choice", "choice": "offcycle_internship", "confidence": 0.95,
+                      "probabilities": {"offcycle_internship": 0.95, "summer_internship": 0.05}},
         "technical_depth": {
             "type": "score",
             "score": 2.0,
@@ -115,10 +115,8 @@ def test_gate_bands_are_ordered():
 
 def test_summer_internship_is_penalised():
     r = _run(
-        _full(
-            is_offcycle={"type": "noul", "noul": 0.02},
-            role_kind={"type": "choice", "choice": "summer_internship", "confidence": 1.0},
-        )
+        _full(role_kind={"type": "choice", "choice": "summer_internship", "confidence": 1.0,
+                         "probabilities": {"summer_internship": 1.0, "offcycle_internship": 0.0}})
     )
     assert r.verdict == "reject"
 

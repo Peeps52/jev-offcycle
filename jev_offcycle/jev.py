@@ -76,6 +76,23 @@ class Decision:
             raise JevError(f"question {qid!r} is not a choice answer: {a!r}")
         return a["choice"], float(a.get("confidence", 0.0))
 
+    def probabilities(self, qid: str) -> dict[str, float]:
+        """Full distribution over a `choice` question's options.
+
+        Using only the top pick throws away most of the answer. A listing at
+        0.7 off-cycle / 0.3 summer and one at 1.0 off-cycle both return
+        "offcycle_internship", and they are not the same listing. Summing the
+        mass on the options you actually want gives a graded match for free --
+        no extra question, no threshold to tune.
+
+        Returns {} if the backend omitted the distribution, so callers must
+        degrade rather than assume.
+        """
+        a = self.answers.get(qid)
+        if not a or a.get("type") != "choice":
+            raise JevError(f"question {qid!r} is not a choice answer: {a!r}")
+        return {k: float(v) for k, v in (a.get("probabilities") or {}).items()}
+
 
 class JevClient:
     def __init__(self, backend: str | None = None, timeout: float = 20.0):

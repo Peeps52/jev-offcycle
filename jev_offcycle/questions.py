@@ -45,8 +45,44 @@ class CandidateProfile:
     availability_note: str  # why -- gives Jev something concrete to reason over
     right_to_work: list[str]  # e.g. ["United Kingdom", "European Union"]
     target_sectors: list[str]
+    # Which programme types you want. Defaults to off-cycle because that is the
+    # search nothing else serves, but the engine is indifferent -- pass
+    # ["summer_internship"] or ["offcycle_internship", "placement_year"] and
+    # the scoring follows. This is the generalisation: off-cycle is a choice
+    # the profile makes, not a rule baked into the questions.
+    target_programmes: tuple[str, ...] = ("offcycle_internship",)
     min_months: int = 3
     max_months: int = 12
+
+
+# Every programme type the classifier knows, with the description Jev reasons
+# over. Order is roughly by duration. "unclear" is mandatory -- a choice
+# question without a no-match option forces a wrong answer on a vague posting.
+PROGRAMME_TYPES: dict[str, str] = {
+    "offcycle_internship": (
+        "A fixed-term internship running OUTSIDE the summer cycle, typically "
+        "three to six months and usually starting in January, February, or "
+        "September. Common in UK and European finance. Not a summer internship."
+    ),
+    "summer_internship": (
+        "An internship explicitly scheduled for the summer period, typically "
+        "eight to twelve weeks between June and August."
+    ),
+    "placement_year": (
+        "A year-long industrial placement or sandwich year, typically twelve "
+        "months, taken between years of a degree."
+    ),
+    "spring_week": (
+        "A short insight programme of a few days to two weeks, aimed at first-"
+        "year students, usually around the spring vacation."
+    ),
+    "graduate_scheme": (
+        "A structured entry programme for recent graduates, usually starting "
+        "at a fixed annual intake and lasting one to three years."
+    ),
+    "permanent_role": "An open-ended full-time position with no fixed end date.",
+    "unclear": "The posting does not give enough information to tell these apart.",
+}
 
 
 def build_questions(profile: CandidateProfile) -> dict[str, dict]:
@@ -55,18 +91,6 @@ def build_questions(profile: CandidateProfile) -> dict[str, dict]:
     sectors = ", ".join(profile.target_sectors)
 
     return {
-        # --- the classification generic tools cannot do -------------------
-        "is_offcycle": {
-            "type": "noul",
-            "instructions": (
-                "This posting is an off-cycle internship: a fixed-term "
-                f"placement of roughly {profile.min_months} to {profile.max_months} "
-                "months that runs outside the standard summer internship cycle, "
-                "typically starting in January, February, or September. It is "
-                "not a summer internship, not a graduate scheme, and not a "
-                "permanent full-time hire."
-            ),
-        },
         "is_target_sector": {
             "type": "noul",
             "instructions": (
@@ -126,30 +150,18 @@ def build_questions(profile: CandidateProfile) -> dict[str, dict]:
             ),
         },
         # --- shape of the role ---------------------------------------------
+        # This replaced a separate `is_offcycle` noul question. The two were
+        # asking the same thing, so one API call per listing was being paid
+        # for twice, and the pair could disagree. A choice over all programme
+        # types is strictly more informative: it says what the role IS, not
+        # merely whether it is one particular thing.
         "role_kind": {
             "type": "choice",
             "instructions": (
                 "Classify what kind of position this posting is for, based on "
-                "its described duration, seniority, and terms."
+                "its stated duration, timing, seniority, and terms."
             ),
-            "criteria": {
-                "offcycle_internship": (
-                    "A fixed-term placement of several months running outside "
-                    "the summer cycle"
-                ),
-                "summer_internship": (
-                    "An internship explicitly scheduled for the summer period"
-                ),
-                "graduate_scheme": (
-                    "A structured entry programme for recent graduates, usually "
-                    "starting at a fixed annual intake"
-                ),
-                "permanent_role": "An open-ended full-time position",
-                "unclear": (
-                    "The posting does not give enough information to tell these "
-                    "apart"
-                ),
-            },
+            "criteria": dict(PROGRAMME_TYPES),
         },
         "technical_depth": {
             "type": "score",

@@ -1,6 +1,8 @@
 # jev-offcycle
 
-Finds **off-cycle** early-stage VC internships that generic CV-vs-JD matchers miss, using [TypeSafe's Jev](https://typesafe.ai) for typed, calibrated decisions.
+Filters internship and graduate listings by **programme type** — off-cycle, summer,
+placement year, spring week, graduate scheme — using [TypeSafe's Jev](https://typesafe.ai)
+for typed, calibrated decisions. Named for the search nothing else serves.
 
 ```
 + [0.95] Off-Cycle Investment Intern — Northgate Ventures
@@ -19,10 +21,24 @@ There are already several good Jev job tools. Every one of them does generic
 CV-versus-job-description matching, and all of them are US-shaped. This one
 encodes three things they structurally cannot:
 
-**1. "Off-cycle" is a concept, not a keyword.** It is a UK/European convention
-— a 3–6 month placement running outside the summer cycle, usually starting in
-January, February, or September. A matcher whose taxonomy has no such category
-cannot filter for it. Here it is the highest-weighted signal in the score.
+**1. Programme type is a concept, not a keyword.** "Off-cycle" is a UK/European
+convention — a 3–6 month placement running outside the summer cycle, usually
+starting in January, February, or September. A matcher whose taxonomy has no
+such category cannot filter for it. Here the full programme taxonomy is the
+highest-weighted signal, and you declare which types you want:
+
+```python
+target_programmes=("offcycle_internship",)                        # the default
+target_programmes=("summer_internship",)                          # summer hunt
+target_programmes=("offcycle_internship", "placement_year")       # either
+```
+
+The score is the probability mass Jev puts on the types you asked for, so a
+listing it reads as 0.7 off-cycle / 0.3 summer scores 0.7 — graded, with no
+extra question and no threshold to tune. The same six fixture listings flip
+verdict on profile alone: Northgate goes shortlist 0.98 / reject 0.00 between
+the off-cycle and summer profiles, Meridian's summer programme goes the other
+way.
 
 **2. Off-cycle roles are misfiled.** On Trackr they sit under `uk-finance`, not
 `uk-tech`, even when the fund is a deep-tech investor. Anything reasoning from
