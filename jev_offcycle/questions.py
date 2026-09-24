@@ -53,6 +53,14 @@ class CandidateProfile:
     target_programmes: tuple[str, ...] = ("offcycle_internship",)
     min_months: int = 3
     max_months: int = 12
+    # Condensed professional summary used for candidacy scoring. Empty string
+    # disables it and the CV questions are not asked at all.
+    #
+    # PRIVACY: whatever goes here is sent to the model on EVERY listing. Put
+    # in what an employer needs to judge you -- education, employers, what you
+    # did -- and leave out name, email, phone and address. They add nothing to
+    # the judgement and everything to the exposure.
+    cv_summary: str = ""
 
 
 # Every programme type the classifier knows, with the description Jev reasons
@@ -90,7 +98,63 @@ def build_questions(profile: CandidateProfile) -> dict[str, dict]:
     rtw = ", ".join(profile.right_to_work)
     sectors = ", ".join(profile.target_sectors)
 
+    # Candidacy questions are added only when a CV summary is supplied, so the
+    # default build stays free of personal data and costs nothing extra.
+    cv: dict[str, dict] = {}
+    if profile.cv_summary.strip():
+        cv = {
+            "meets_stated_requirements": {
+                "type": "noul",
+                "instructions": (
+                    "The candidate described under `candidate` in the state "
+                    "satisfies the hard eligibility requirements this posting "
+                    "states -- year of study, degree status, graduation window, "
+                    "and any required prior experience. Judge only against "
+                    "requirements the posting actually states. Where it states "
+                    "none, this condition is satisfied."
+                ),
+            },
+            "experience_fit": {
+                "type": "score",
+                "instructions": (
+                    "How well does the candidate's prior experience, described "
+                    "under `candidate`, match the work this role actually "
+                    "involves day to day?"
+                ),
+                "criteria": [
+                    "No relevant experience: nothing in the background touches "
+                    "this kind of work",
+                    "Adjacent only: related field or transferable analytical "
+                    "skills, but not this work",
+                    "Directly relevant: has done substantially this work before, "
+                    "in a comparable setting",
+                    "Unusually strong: directly relevant experience plus "
+                    "something distinctive this employer would find hard to "
+                    "find elsewhere",
+                ],
+            },
+            "employer_scale_fit": {
+                "type": "choice",
+                "instructions": (
+                    "What size of organisation is hiring, judged from the "
+                    "posting? Smaller employers often weigh unusual backgrounds "
+                    "more heavily than structured graduate pipelines do."
+                ),
+                "criteria": {
+                    "startup": "An operating company under roughly 50 people",
+                    "small_firm": "A boutique fund or firm, roughly 10-50 people",
+                    "mid_size": "An established firm of roughly 50-500 people",
+                    "large_institution": (
+                        "A bank, asset manager or corporation of 500+ people, "
+                        "typically with a structured recruitment programme"
+                    ),
+                    "unclear": "The posting does not indicate the size",
+                },
+            },
+        }
+
     return {
+        **cv,
         "is_target_sector": {
             "type": "noul",
             "instructions": (

@@ -25,9 +25,37 @@ DEFAULT_PROFILE = CandidateProfile(
         "early-stage technology investing",
         "startup accelerators",
     ],
-    # Which programme types you want. Add "summer_internship",
-    # "placement_year", "spring_week", "graduate_scheme" to widen the search.
-    target_programmes=("offcycle_internship",),
+    # Which programme types you want. Off-cycle is the search nothing else
+    # serves; graduate schemes are included because a Jan-2027 finalist is
+    # eligible for both and there is no reason to hide one.
+    # Also available: "summer_internship", "placement_year", "spring_week".
+    target_programmes=("offcycle_internship", "graduate_scheme"),
+    # Condensed deliberately. Name, email, phone and address are absent --
+    # they add nothing to the judgement and this string is sent on every call.
+    cv_summary=(
+        "Final-year BSc International Economics and Management at Bocconi "
+        "University, Milan (Sep 2023 - Jan 2027 expected, expected 105/110). "
+        "Coursework in multivariable calculus, probability, statistics, "
+        "econometrics, corporate finance, accounting and computer science. "
+        "Previously St Paul's School, London: A Levels in Mathematics, Further "
+        "Mathematics, Economics and Physics; 11 A* at GCSE. "
+        "Experience: venture capital summer analyst at BRV Capital Management "
+        "(Venture Opportunities Team, Seoul, Jun-Aug 2025) - commercial and "
+        "technical diligence on early-stage and growth investments, 15+ founder "
+        "and management meetings, assessed an Oxford hyperspectral-imaging "
+        "spin-out raising a $15m Series A+ including VDR, cap table and "
+        "commercial traction, built top-down and bottom-up market models for "
+        "semiconductor metrology, modelled ownership and dilution under "
+        "alternative financing scenarios, produced sector research across "
+        "semiconductors, AI data-centre infrastructure, robotics, medical AI "
+        "and genomics for the CEO and investment committee. "
+        "Investment banking intern at Equita (Milan, Jun 2023) - cybersecurity "
+        "M&A research, comparable-company analysis, daily morning note. "
+        "Marketing and strategy at Tod's (Milan, Jul 2024). "
+        "BSc thesis on tacit coordination in prediction markets, building a "
+        "transaction-level Polymarket dataset. "
+        "Builds software: Python, SQL, data pipelines, LLM applications."
+    ),
     min_months=3,
     max_months=12,
 )

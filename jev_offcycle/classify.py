@@ -61,10 +61,12 @@ class Result:
     signals: dict[str, Any] = field(default_factory=dict)
     cost_usd: float = 0.0
     latency_ms: float = 0.0
+    candidacy: float | None = None   # separate axis; None when no CV supplied
 
     def line(self) -> str:
         mark = {"shortlist": "+", "review": "?", "reject": "-"}[self.verdict]
-        head = f"{mark} [{self.score:.2f}] {self.listing.title} — {self.listing.organisation}"
+        cand = f" cand {self.candidacy:.2f}" if self.candidacy is not None else ""
+        head = f"{mark} [{self.score:.2f}{cand}] {self.listing.title} — {self.listing.organisation}"
         if self.reasons:
             head += f"\n      {'; '.join(self.reasons)}"
         return head
@@ -106,7 +108,10 @@ def _score_level(d: Decision, qid: str) -> tuple[float, int]:
 
 def classify(listing: Listing, profile: CandidateProfile, client: JevClient | None = None) -> Result:
     client = client or JevClient()
-    decision = client.decide(listing.as_state(), build_questions(profile))
+    state = {"posting": listing.as_state()}
+    if profile.cv_summary.strip():
+        state["candidate"] = profile.cv_summary.strip()
+    decision = client.decide(state, build_questions(profile))
     sig = _read(decision)
 
     reasons: list[str] = []
@@ -214,6 +219,26 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
         verdict = "reject"
         reasons.append(f"weak fit ({kind} {programme:.2f}, sector {sector:.2f})")
 
+    # --- candidacy: a SEPARATE axis, deliberately not folded into `score` ----
+    # Role fit and competitiveness are different questions. A role can be
+    # exactly right and you not be eligible, or you can be perfect for
+    # something you do not want. Merging them into one number destroys the
+    # distinction and you cannot tell which half failed.
+    candidacy = None
+    if profile.cv_summary.strip() and "experience_fit" in decision.answers:
+        meets = decision.noul("meets_stated_requirements")
+        lvl, n = _score_level(decision, "experience_fit")
+        exp = lvl / (n - 1) if n > 1 else 0.0
+        candidacy = round(0.5 * meets + 0.5 * exp, 3)
+        scale, _sc = decision.choice("employer_scale_fit")
+        sig["candidacy"] = {"meets_requirements": round(meets, 3),
+                            "experience_level": round(lvl, 2),
+                            "employer_scale": scale}
+        if meets < 0.4:
+            reasons.append(f"may not meet stated requirements (p={meets:.2f})")
+        if exp >= 0.66:
+            reasons.append(f"strong experience match ({scale})")
+
     if verdict == "shortlist":
         reasons.insert(
             0, f"{kind} {programme:.2f} · sector {sector:.2f} · early-stage {early:.2f}"
@@ -227,4 +252,5 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
         signals=sig,
         cost_usd=decision.cost_usd,
         latency_ms=decision.latency_ms,
+        candidacy=candidacy,
     )
