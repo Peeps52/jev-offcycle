@@ -154,9 +154,34 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
         1.0 if kind in wanted else 0.0
     )
 
-    # Programme match is weighted hardest: it is the premise of the search and
-    # the thing no other tool models at all.
-    score = 0.5 * programme + 0.3 * sector + 0.2 * early
+    # WEIGHTED GEOMETRIC MEAN, not a weighted sum. These dimensions are
+    # conjunctive: you need the right programme AT the right kind of firm.
+    # A sum lets one dimension carry the rest, and real data proved it --
+    # BlackRock's off-cycle programme scored 0.53 and reached review on
+    # programme match alone, with sector 0.05 and early-stage 0.05, because
+    # 0.5 x 0.95 already clears the band. It is asset management, not
+    # early-stage VC, and should never have surfaced.
+    #
+    # Geometric weighting means any near-zero dimension sinks the result,
+    # which is what "wrong firm" should do. Floored at 0.01 so a single zero
+    # does not annihilate the score and destroy the ordering among rejects.
+    # One exception, and it is the whole thesis of this repo reappearing in a
+    # new place: when Jev returns `unclear`, the probability mass on the
+    # wanted types is ~0 -- but that means UNKNOWN, not WRONG. Feeding it to
+    # a geometric mean annihilates the score and rejects the listing. The
+    # first version of this change did exactly that, dropping a vague
+    # early-stage VC posting from review 0.66 to reject 0.10.
+    #
+    # An unreadable posting is a question for a human, not a no. Substitute a
+    # neutral 0.5 and force review.
+    if kind == "unclear":
+        programme = 0.5
+        forced_review = True
+
+    def _g(x: float, w: float) -> float:
+        return max(x, 0.01) ** w
+
+    score = _g(programme, 0.5) * _g(sector, 0.3) * _g(early, 0.2)
 
     # Technical depth was previously computed and then ignored -- an API call
     # paid for on every listing that changed nothing. It is a modest bonus,

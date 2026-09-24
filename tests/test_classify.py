@@ -214,3 +214,42 @@ def test_live_fixture_verdicts():
     for org in ("Meridian Capital Partners", "Halberd Asset Management",
                 "Lattice Fund", "Aperture Seed"):
         assert got[org] == "reject", f"{org} should be rejected, got {got[org]}"
+
+
+# --- regressions found by REAL listings, not the synthetic fixture ---------
+
+
+def test_right_programme_at_wrong_firm_is_rejected():
+    """BlackRock's real 2027 off-cycle posting exposed this.
+
+    A perfect programme match (1.00) at sector 0.05 and early-stage 0.05 —
+    asset management, not early-stage VC — scored 0.53 under a weighted SUM
+    and reached review. The dimensions are conjunctive: right programme AT
+    the right kind of firm. A geometric mean makes any near-zero sink it.
+    """
+    r = _run(
+        _full(
+            is_target_sector={"type": "noul", "noul": 0.05},
+            is_early_stage={"type": "noul", "noul": 0.05},
+        )
+    )
+    assert r.verdict == "reject", f"wrong-firm listing surfaced at {r.score}"
+    assert r.score < 0.4
+
+
+def test_unclear_programme_is_unknown_not_wrong():
+    """The geometric fix above reintroduced the repo's founding bug.
+
+    `unclear` puts ~0 mass on the wanted types, which a geometric mean treats
+    as a zero match and annihilates — dropping a vague but plausible VC
+    posting from review 0.66 to reject 0.10. Unknown must route to review.
+    """
+    r = _run(
+        _full(
+            role_kind={"type": "choice", "choice": "unclear", "confidence": 0.5,
+                       "probabilities": {"unclear": 0.9, "offcycle_internship": 0.05}},
+            is_target_sector={"type": "noul", "noul": 0.94},
+        )
+    )
+    assert r.verdict == "review", f"unclear listing was {r.verdict}, must be review"
+    assert any("unclear" in x for x in r.reasons)
