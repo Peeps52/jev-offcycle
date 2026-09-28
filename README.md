@@ -154,6 +154,18 @@ jev_offcycle/
 Errors are raised, never swallowed. A filter that silently drops a listing on
 an API error is a filter you cannot trust.
 
+## Credit where it is due
+
+Four ideas here came from reading [jobleft](https://github.com/Blueturboguy07/jobleft)
+(MIT), a considerably more complete job-search app: the additional ATS
+platforms, one-request-per-second-per-host with `robots.txt` honoured,
+marking listings closed when they leave their board, and keeping a local
+store. Its crawler is better than mine was and covers eight platforms.
+
+What is different here is the European programme taxonomy — off-cycle, spring
+week, placement year, which a US-shaped tool has no category for — and
+calibrated probabilities you can threshold rather than a match percentage.
+
 ## Tests
 
 ```bash

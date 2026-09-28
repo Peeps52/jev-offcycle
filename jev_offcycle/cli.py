@@ -162,10 +162,23 @@ def crawl_main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", type=Path, help="write fetched listings to JSON and stop")
     args = ap.parse_args(argv)
 
-    listings, stats = fetch(load_sources(str(args.sources)))
+    from . import store as _store
+
+    srcs = load_sources(str(args.sources))
+    listings, stats = fetch(srcs)
     keep = prefilter(listings)
+
+    con = _store.connect()
+    seen = {f"{s.ats}:{s.slug}" for s in srcs}
+    delta = _store.sync(con, keep, seen)
+    fresh = _store.needs_scoring(con, keep)
     print(f"\n  {len(listings)} listings · {len(keep)} after prefilter · boards {stats}",
           file=sys.stderr)
+    print(f"  store: {delta['new']} new · {delta['changed']} changed · "
+          f"{delta['unchanged']} unchanged · {delta['closed']} closed", file=sys.stderr)
+    print(f"  {len(fresh)} need scoring ({len(keep)-len(fresh)} already priced)",
+          file=sys.stderr)
+    keep = fresh
 
     if args.out:
         args.out.write_text(json.dumps([{
@@ -186,7 +199,19 @@ def crawl_main(argv: list[str] | None = None) -> int:
             print(f"!! {l.title}: {e}", file=sys.stderr)
             continue
         results.append(r)
+        _store.save_verdict(con, r)
         cost += r.cost_usd
+
+    # The report shows EVERY live verdict, not only this run's -- otherwise a
+    # second run would show an empty shortlist, having correctly skipped
+    # everything it already knew.
+    from .classify import Listing as _L, Result as _R
+    for v in _store.load_verdicts(con):
+        if any(r.listing.url == v["listing"].get("url") for r in results):
+            continue
+        results.append(_R(listing=_L(**v["listing"]), verdict=v["verdict"],
+                          score=v["score"], reasons=v["reasons"],
+                          signals=v["signals"], candidacy=v["candidacy"]))
     results.sort(key=lambda r: r.score, reverse=True)
 
     # A shortlist is something you read and click through, not something that

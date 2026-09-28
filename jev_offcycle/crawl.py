@@ -10,6 +10,19 @@ changes next week.
     greenhouse  https://boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=true
     lever       https://api.lever.co/v0/postings/{slug}?mode=json
     ashby       https://api.ashbyhq.com/posting-api/job-board/{slug}
+    workable    https://apply.workable.com/api/v1/widget/accounts/{slug}?details=true
+    recruitee   https://{slug}.recruitee.com/api/offers/
+    personio    https://{slug}.jobs.personio.de/search.json
+    teamtailor  https://{slug}.teamtailor.com/jobs.json
+
+The last four came from reading jobleft (MIT, Blueturboguy07/jobleft), which
+covers eight platforms to my original three. Personio and Teamtailor matter
+disproportionately here: both are European, and a US-shaped job tool tends to
+skip them.
+
+Crawling politely is not optional. One request per second per host, a real
+User-Agent, and robots.txt respected -- also from jobleft, and the right
+default regardless of whether anyone is watching.
 
 `jev_ultrafast` remains the fallback for sites with no API at all, but reach
 for it last: it needs Chrome, a TypeSafe or OpenRouter key, and roughly 310ms
@@ -20,15 +33,51 @@ from __future__ import annotations
 
 import json
 import re
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import urllib.robotparser
 from dataclasses import dataclass
 
 from .classify import Listing
 
-UA = "jev-offcycle/0.2 (+https://github.com/Peeps52/jev-offcycle)"
+UA = "jev-offcycle/0.3 (+https://github.com/Peeps52/jev-offcycle)"
 TIMEOUT = 20
+RATE_LIMIT_S = 1.0          # per host, matching jobleft's courtesy
+
+_last_hit: dict[str, float] = {}
+_robots: dict[str, object] = {}
+
+
+def _throttle(url: str) -> None:
+    host = urllib.parse.urlparse(url).netloc
+    wait = RATE_LIMIT_S - (time.monotonic() - _last_hit.get(host, 0.0))
+    if wait > 0:
+        time.sleep(wait)
+    _last_hit[host] = time.monotonic()
+
+
+def _allowed(url: str) -> bool:
+    """Honour robots.txt. Fails OPEN on an unreachable robots file, which is
+    the convention -- but fails CLOSED on an explicit disallow."""
+    parts = urllib.parse.urlparse(url)
+    host = f"{parts.scheme}://{parts.netloc}"
+    rp = _robots.get(host)
+    if rp is None:
+        rp = urllib.robotparser.RobotFileParser()
+        rp.set_url(f"{host}/robots.txt")
+        try:
+            rp.read()
+        except Exception:
+            rp = False          # unreachable: treat as permitted
+        _robots[host] = rp
+    if rp is False:
+        return True
+    try:
+        return rp.can_fetch(UA, url)
+    except Exception:
+        return True
 
 
 @dataclass
@@ -44,6 +93,9 @@ class Source:
 
 
 def _get(url: str) -> dict | list | None:
+    if not _allowed(url):
+        return None
+    _throttle(url)
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
@@ -113,7 +165,65 @@ def _ashby(s: Source) -> list[Listing]:
     return out
 
 
-FETCHERS = {"greenhouse": _greenhouse, "lever": _lever, "ashby": _ashby}
+def _workable(s: Source) -> list[Listing]:
+    d = _get(f"https://apply.workable.com/api/v1/widget/accounts/{s.slug}?details=true")
+    if not isinstance(d, dict):
+        return []
+    return [Listing(
+        title=j.get("title", ""), organisation=s.label(),
+        location=", ".join(x for x in (j.get("city"), j.get("country")) if x),
+        description=_clean(j.get("description", "") + " " + j.get("requirements", ""))[:6000],
+        duration=j.get("employment_type", ""), url=j.get("url", ""),
+        source=f"workable:{s.slug}") for j in d.get("jobs", [])]
+
+
+def _recruitee(s: Source) -> list[Listing]:
+    d = _get(f"https://{s.slug}.recruitee.com/api/offers/")
+    if not isinstance(d, dict):
+        return []
+    return [Listing(
+        title=j.get("title", ""), organisation=s.label(),
+        location=", ".join(x for x in (j.get("city"), j.get("country")) if x),
+        description=_clean(j.get("description", "") + " " + j.get("requirements", ""))[:6000],
+        duration=j.get("employment_type_code", ""), url=j.get("careers_url", ""),
+        source=f"recruitee:{s.slug}") for j in d.get("offers", [])]
+
+
+def _personio(s: Source) -> list[Listing]:
+    d = _get(f"https://{s.slug}.jobs.personio.de/search.json")
+    if not isinstance(d, list):
+        return []
+    out = []
+    for j in d:
+        desc = j.get("jobDescriptions") or j.get("job_descriptions") or ""
+        if isinstance(desc, list):
+            desc = " ".join(x.get("value", "") if isinstance(x, dict) else str(x) for x in desc)
+        out.append(Listing(
+            title=j.get("name", "") or j.get("subcompany", ""), organisation=s.label(),
+            location=j.get("office", ""), description=_clean(str(desc))[:6000],
+            duration=j.get("employmentType", ""),
+            url=j.get("url", "") or f"https://{s.slug}.jobs.personio.de/",
+            source=f"personio:{s.slug}"))
+    return out
+
+
+def _teamtailor(s: Source) -> list[Listing]:
+    d = _get(f"https://{s.slug}.teamtailor.com/jobs.json")
+    if not isinstance(d, (dict, list)):
+        return []
+    jobs = d.get("jobs", []) if isinstance(d, dict) else d
+    return [Listing(
+        title=j.get("title", ""), organisation=s.label(),
+        location=(j.get("location") or {}).get("city", "") if isinstance(j.get("location"), dict)
+                 else str(j.get("location") or ""),
+        description=_clean(j.get("body", "") or j.get("pitch", ""))[:6000],
+        url=j.get("careersite-job-url", "") or j.get("url", ""),
+        source=f"teamtailor:{s.slug}") for j in jobs]
+
+
+FETCHERS = {"greenhouse": _greenhouse, "lever": _lever, "ashby": _ashby,
+            "workable": _workable, "recruitee": _recruitee,
+            "personio": _personio, "teamtailor": _teamtailor}
 
 
 def fetch(sources: list[Source], verbose: bool = True) -> tuple[list[Listing], dict]:
