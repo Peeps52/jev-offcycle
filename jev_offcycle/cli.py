@@ -188,9 +188,14 @@ def crawl_main(argv: list[str] | None = None) -> int:
         results.append(r)
         cost += r.cost_usd
     results.sort(key=lambda r: r.score, reverse=True)
-    for r in results:
-        if r.verdict != "reject":
-            print(r.line())
+
+    # A shortlist is something you read and click through, not something that
+    # scrolls past. Write a page and open it.
+    from .report import write as write_report
+    out = Path.home() / "Desktop" / "shortlist.html"
+    write_report(results, out, meta={"source": str(args.sources), "fetched": len(listings)})
+    print(f"  report: {out}", file=sys.stderr)
+
     print(f"\n  {len(results)} scored · "
           f"{sum(r.verdict=='shortlist' for r in results)} shortlist · "
           f"{sum(r.verdict=='review' for r in results)} review · "

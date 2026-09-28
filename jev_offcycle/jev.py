@@ -108,15 +108,40 @@ class JevClient:
             raise JevError(f"unknown backend {self.backend!r}")
 
     @staticmethod
+    def _load_dotenv() -> None:
+        """Read KEY=value from a .env beside the package, if present.
+
+        Without this the tool only works inside a shell where you have already
+        exported the key -- which means it works when you test it and fails
+        the next morning. A .env file is set once and forgotten.
+        """
+        import os as _os
+        from pathlib import Path as _P
+        for candidate in (_P.cwd() / ".env", _P(__file__).parent.parent / ".env"):
+            if not candidate.exists():
+                continue
+            for line in candidate.read_text().splitlines():
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                _os.environ.setdefault(k.strip(), v.strip().strip("'\""))
+            return
+
+    @staticmethod
     def _autodetect() -> str:
+        JevClient._load_dotenv()
         # TypeSafe first: it is the direct route, one fewer hop than OpenRouter.
         if os.getenv("TYPESAFE_API_KEY"):
             return "typesafe"
         if os.getenv("OPENROUTER_API_KEY"):
             return "openrouter"
         raise JevError(
-            "No key found. Set OPENROUTER_API_KEY (openrouter.ai/keys) or "
-            "TYPESAFE_API_KEY (console.typesafe.ai)."
+            "No API key found.\n\n"
+            "  Create a file called .env in this folder containing one line:\n"
+            "      OPENROUTER_API_KEY=sk-or-...\n\n"
+            "  Get a key at https://openrouter.ai/keys\n"
+            "  (or TYPESAFE_API_KEY=... from https://console.typesafe.ai)"
         )
 
     def decide(self, state: Any, questions: dict[str, dict]) -> Decision:
