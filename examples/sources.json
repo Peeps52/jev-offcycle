@@ -1,0 +1,37 @@
+[
+  {
+    "ats": "lever",
+    "slug": "palantir",
+    "name": "Palantir"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "monzo",
+    "name": "Monzo"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "wise",
+    "name": "Wise"
+  },
+  {
+    "ats": "lever",
+    "slug": "checkout",
+    "name": "Checkout.com"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "deliveroo",
+    "name": "Deliveroo"
+  },
+  {
+    "ats": "ashby",
+    "slug": "ramp",
+    "name": "Ramp"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "definitely-not-a-real-board-xyz",
+    "name": "Broken (deliberate)"
+  }
+]

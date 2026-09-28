@@ -12,6 +12,27 @@ from .classify import Listing, classify
 from .jev import JevClient, JevError
 from .questions import CandidateProfile
 
+
+def _load_cv() -> str:
+    """Read the CV from the gitignored profile.local.py.
+
+    Kept out of the repo deliberately: it is personal data, it is sent to the
+    model on every listing, and a public repo is the wrong place for either.
+    Absent, candidacy scoring simply switches off and role scoring still runs.
+    """
+    try:
+        import importlib.util
+        from pathlib import Path
+        p = Path(__file__).parent.parent / "profile.local.py"
+        if not p.exists():
+            return ""
+        spec = importlib.util.spec_from_file_location("profile_local", p)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return getattr(mod, "CV_SUMMARY", "")
+    except Exception:
+        return ""
+
 # Edit this block, not the question text in questions.py.
 DEFAULT_PROFILE = CandidateProfile(
     available_from="2027-01-22",
@@ -32,30 +53,7 @@ DEFAULT_PROFILE = CandidateProfile(
     target_programmes=("offcycle_internship", "graduate_scheme"),
     # Condensed deliberately. Name, email, phone and address are absent --
     # they add nothing to the judgement and this string is sent on every call.
-    cv_summary=(
-        "Final-year BSc International Economics and Management at Bocconi "
-        "University, Milan (Sep 2023 - Jan 2027 expected, expected 105/110). "
-        "Coursework in multivariable calculus, probability, statistics, "
-        "econometrics, corporate finance, accounting and computer science. "
-        "Previously St Paul's School, London: A Levels in Mathematics, Further "
-        "Mathematics, Economics and Physics; 11 A* at GCSE. "
-        "Experience: venture capital summer analyst at BRV Capital Management "
-        "(Venture Opportunities Team, Seoul, Jun-Aug 2025) - commercial and "
-        "technical diligence on early-stage and growth investments, 15+ founder "
-        "and management meetings, assessed an Oxford hyperspectral-imaging "
-        "spin-out raising a $15m Series A+ including VDR, cap table and "
-        "commercial traction, built top-down and bottom-up market models for "
-        "semiconductor metrology, modelled ownership and dilution under "
-        "alternative financing scenarios, produced sector research across "
-        "semiconductors, AI data-centre infrastructure, robotics, medical AI "
-        "and genomics for the CEO and investment committee. "
-        "Investment banking intern at Equita (Milan, Jun 2023) - cybersecurity "
-        "M&A research, comparable-company analysis, daily morning note. "
-        "Marketing and strategy at Tod's (Milan, Jul 2024). "
-        "BSc thesis on tacit coordination in prediction markets, building a "
-        "transaction-level Polymarket dataset. "
-        "Builds software: Python, SQL, data pipelines, LLM applications."
-    ),
+    cv_summary=_load_cv(),
     min_months=3,
     max_months=12,
 )
@@ -151,3 +149,51 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+def crawl_main(argv: list[str] | None = None) -> int:
+    """python3 -m jev_offcycle.crawl_cli examples/sources.json"""
+    import argparse
+    from .crawl import fetch, load_sources, prefilter
+
+    ap = argparse.ArgumentParser(prog="jev-offcycle crawl")
+    ap.add_argument("sources", type=Path)
+    ap.add_argument("--limit", type=int, default=0, help="score at most N listings")
+    ap.add_argument("--out", type=Path, help="write fetched listings to JSON and stop")
+    args = ap.parse_args(argv)
+
+    listings, stats = fetch(load_sources(str(args.sources)))
+    keep = prefilter(listings)
+    print(f"\n  {len(listings)} listings · {len(keep)} after prefilter · boards {stats}",
+          file=sys.stderr)
+
+    if args.out:
+        args.out.write_text(json.dumps([{
+            "title": l.title, "organisation": l.organisation, "location": l.location,
+            "description": l.description, "duration": l.duration, "url": l.url,
+            "source": l.source} for l in keep], indent=2))
+        print(f"  wrote {len(keep)} listings to {args.out}", file=sys.stderr)
+        return 0
+
+    if args.limit:
+        keep = keep[: args.limit]
+    client = JevClient()
+    results, cost = [], 0.0
+    for l in keep:
+        try:
+            r = classify(l, DEFAULT_PROFILE, client)
+        except JevError as e:
+            print(f"!! {l.title}: {e}", file=sys.stderr)
+            continue
+        results.append(r)
+        cost += r.cost_usd
+    results.sort(key=lambda r: r.score, reverse=True)
+    for r in results:
+        if r.verdict != "reject":
+            print(r.line())
+    print(f"\n  {len(results)} scored · "
+          f"{sum(r.verdict=='shortlist' for r in results)} shortlist · "
+          f"{sum(r.verdict=='review' for r in results)} review · "
+          f"{sum(r.verdict=='reject' for r in results)} reject · ${cost:.4f}",
+          file=sys.stderr)
+    return 0
