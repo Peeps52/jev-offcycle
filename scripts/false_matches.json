@@ -1,0 +1,11 @@
+{
+  "Frontline Ventures": "greenhouse board belongs to Frontline Global Services, Houston oilfield firm",
+  "Apax Partners": "recruitee board belongs to Apax, a UK mental-health provider",
+  "Plural": "ashby board belongs to a New York tech company, not the fund",
+  "Cleo": "greenhouse board is Cleo (US), a different company",
+  "Oliver Wyman": "lever board belongs to a San Francisco software firm",
+  "Bolt": "personio board is a Swedish recruitment agency",
+  "Personio": "recruitee board is an API sandbox ('Musterstr 1')",
+  "Susquehanna": "personio slug returns nothing usable",
+  "Felix Capital": "personio slug returns nothing usable"
+}

@@ -1,0 +1,206 @@
+# Name | category | explicit slugs (optional)
+# --- VC, London & Europe
+Balderton | vc
+Index Ventures | vc | indexventures
+Atomico | vc
+LocalGlobe | vc
+Seedcamp | vc
+Accel | vc
+Northzone | vc
+Creandum | vc
+Hoxton Ventures | vc
+Notion Capital | vc
+Octopus Ventures | vc
+Molten Ventures | vc
+Frontline Ventures | vc | frontline
+Point Nine | vc | pointnine
+Speedinvest | vc
+Cherry Ventures | vc
+HV Capital | vc
+Lakestar | vc
+Eight Roads | vc
+Kindred Capital | vc
+Plural | vc
+Mosaic Ventures | vc
+Stride VC | vc | stride
+Oxford Science Enterprises | vc | oxfordscienceenterprises,ose
+Breega | vc
+Partech | vc
+Eurazeo | vc
+Dawn Capital | vc
+Felix Capital | vc
+Passion Capital | vc
+Playfair Capital | vc
+Connect Ventures | vc
+Firstminute Capital | vc
+Entrepreneur First | vc | entrepreneurfirst,ef
+Antler | vc
+General Catalyst | vc
+Lightspeed | vc
+Bessemer Venture Partners | vc | bessemer
+Sequoia Capital | vc | sequoia
+Andreessen Horowitz | vc | a16z
+Creator Fund | vc
+Episode 1 | vc
+Octopus Ventures | vc
+United Ventures | vc
+P101 | vc
+360 Capital | vc | 360capital
+CDP Venture Capital | vc | cdpventurecapital,cdpvc
+Primo Ventures | vc
+LVenture Group | vc | lventure
+# --- PE & growth
+Hg | pe | hgcapital,hg
+Permira | pe
+Cinven | pe
+EQT | pe | eqt,eqtgroup
+Bridgepoint | pe
+CVC Capital Partners | pe | cvc
+Apax Partners | pe | apax
+Vitruvian Partners | pe | vitruvian
+Inflexion | pe
+ICG | pe | icg
+3i | pe | 3i
+Ardian | pe
+TA Associates | pe | taassociates
+General Atlantic | pe | generalatlantic
+Warburg Pincus | pe
+KKR | pe
+Carlyle | pe | carlyle
+Advent International | pe | advent
+Triton Partners | pe | triton
+Nordic Capital | pe
+Investindustrial | pe
+Clessidra | pe
+BC Partners | pe
+Montagu | pe
+Oakley Capital | pe
+Livingbridge | pe
+Hayfin | pe
+Pollen Street | pe | pollenstreet
+Highland Europe | pe
+Summit Partners | pe
+Insight Partners | pe | insightpartners
+# --- IB & advisory
+Evercore | ib
+Lazard | ib
+Rothschild & Co | ib | rothschild,rothschildandco
+PJT Partners | ib | pjtpartners
+Moelis | ib
+Centerview Partners | ib | centerview
+Perella Weinberg | ib | perellaweinberg,pwp
+Houlihan Lokey | ib | houlihanlokey
+Jefferies | ib
+DC Advisory | ib | dcadvisory
+Lincoln International | ib | lincolninternational
+Alantra | ib
+Mediobanca | ib
+Equita | ib
+Arma Partners | ib | armapartners
+GP Bullhound | ib | gpbullhound
+# --- strategy / consulting
+Simon-Kucher | strategy | simonkucher,simon-kucher
+OC&C | strategy | occstrategy,occ
+LEK Consulting | strategy | lek
+Oliver Wyman | strategy | oliverwyman
+Roland Berger | strategy | rolandberger
+Kearney | strategy
+# --- trading / quant (tech-heavy, London)
+Optiver | trading
+IMC Trading | trading | imc,imctrading
+Hudson River Trading | trading | hudsonrivertrading,hrt
+Jane Street | trading | janestreet
+Citadel | trading
+Flow Traders | trading | flowtraders
+Susquehanna | trading | sig,susquehanna
+# --- tech, London
+Revolut | tech
+Monzo | tech
+Wise | tech
+Stripe | tech
+Deliveroo | tech
+Checkout.com | tech | checkout,checkoutcom
+GoCardless | tech
+Ramp | tech
+Palantir | tech
+Tide | tech
+Zopa | tech
+Starling Bank | tech | starling,starlingbank
+Lendable | tech
+Cleo | tech | cleo,cleoai
+Marshmallow | tech
+TrueLayer | tech
+Primer | tech
+Yapily | tech
+Thought Machine | tech | thoughtmachine
+Quantexa | tech
+Synthesia | tech
+ElevenLabs | tech
+Wayve | tech
+Faculty | tech | faculty,facultyai
+Cognism | tech
+Beamery | tech
+Multiverse | tech
+Octopus Energy | tech
+Kraken | tech | kraken,krakentech
+Paddle | tech
+Cera | tech | cera,ceracare
+Onfido | tech
+Improbable | tech
+PhysicsX | tech
+Nothing | tech | nothing,nothingtech
+Isomorphic Labs | tech | isomorphiclabs
+Helsing | tech
+# --- tech, Milan & Italy
+Satispay | tech
+Scalapay | tech
+Bending Spoons | tech | bendingspoons
+Moneyfarm | tech
+Prima | tech | prima,primaassicurazioni
+Casavo | tech
+Yoox Net-a-Porter | tech | ynap,yooxnetaporter
+Everli | tech
+Treedom | tech
+Conio | tech
+Qonto | tech
+Jobtech | tech
+Soldo | tech
+Musixmatch | tech
+Cortilia | tech
+Nuvolar | tech
+Fiscozen | tech
+Aporti | tech
+# --- tech, other European hubs
+N26 | tech
+Klarna | tech
+Spotify | tech
+Adyen | tech
+Mollie | tech
+Bolt | tech | bolt,boltEU
+Glovo | tech
+Doctolib | tech
+Alan | tech | alan,alanfrance
+Pennylane | tech
+Pigment | tech
+Dataiku | tech
+Mistral AI | tech | mistral,mistralai
+Trade Republic | tech | traderepublic
+Scalable Capital | tech | scalablecapital
+Personio | tech
+Celonis | tech
+Contentful | tech
+DeepL | tech
+n8n | tech
+Pleo | tech
+Vinted | tech
+Too Good To Go | tech | toogoodtogo
+SumUp | tech
+Bitpanda | tech
+Lovable | tech
+Legora | tech
+Black Forest Labs | tech | blackforestlabs
+Photoroom | tech
+Swile | tech
+Payhawk | tech
+Factorial | tech | factorial,factorialhr
+Travelperk | tech

@@ -1,0 +1,1323 @@
+[
+  {
+    "name": "Balderton",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "balderton",
+    "jobs": 0
+  },
+  {
+    "name": "Index Ventures",
+    "category": "vc",
+    "status": "empty",
+    "ats": "lever",
+    "slug": "indexventures",
+    "jobs": 0
+  },
+  {
+    "name": "Atomico",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "LocalGlobe",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "localglobe",
+    "jobs": 0
+  },
+  {
+    "name": "Seedcamp",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "seedcamp",
+    "jobs": 0
+  },
+  {
+    "name": "Accel",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "accel",
+    "jobs": 0
+  },
+  {
+    "name": "Northzone",
+    "category": "vc",
+    "status": "ok",
+    "ats": "personio",
+    "slug": "northzone",
+    "jobs": 1
+  },
+  {
+    "name": "Creandum",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "creandum",
+    "jobs": 0
+  },
+  {
+    "name": "Hoxton Ventures",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Notion Capital",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Octopus Ventures",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "octopus-ventures",
+    "jobs": 0
+  },
+  {
+    "name": "Molten Ventures",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Frontline Ventures",
+    "category": "vc",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "frontline",
+    "jobs": 3
+  },
+  {
+    "name": "Point Nine",
+    "category": "vc",
+    "status": "ok",
+    "ats": "recruitee",
+    "slug": "pointnine",
+    "jobs": 2
+  },
+  {
+    "name": "Speedinvest",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "speedinvest",
+    "jobs": 0
+  },
+  {
+    "name": "Cherry Ventures",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "cherry-ventures",
+    "jobs": 0
+  },
+  {
+    "name": "HV Capital",
+    "category": "vc",
+    "status": "empty",
+    "ats": "personio",
+    "slug": "hv-capital",
+    "jobs": 0
+  },
+  {
+    "name": "Lakestar",
+    "category": "vc",
+    "status": "ok",
+    "ats": "personio",
+    "slug": "lakestar",
+    "jobs": 1
+  },
+  {
+    "name": "Eight Roads",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Kindred Capital",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "kindred-capital",
+    "jobs": 0
+  },
+  {
+    "name": "Plural",
+    "category": "vc",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "plural",
+    "jobs": 4
+  },
+  {
+    "name": "Mosaic Ventures",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "mosaicventures",
+    "jobs": 0
+  },
+  {
+    "name": "Stride VC",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "stride",
+    "jobs": 0
+  },
+  {
+    "name": "Oxford Science Enterprises",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "ose",
+    "jobs": 0
+  },
+  {
+    "name": "Breega",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Partech",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "partech",
+    "jobs": 0
+  },
+  {
+    "name": "Eurazeo",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Dawn Capital",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "dawn-capital",
+    "jobs": 0
+  },
+  {
+    "name": "Felix Capital",
+    "category": "vc",
+    "status": "ok",
+    "ats": "personio",
+    "slug": "felix-capital",
+    "jobs": 3
+  },
+  {
+    "name": "Passion Capital",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Playfair Capital",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Connect Ventures",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "connect-ventures",
+    "jobs": 0
+  },
+  {
+    "name": "Firstminute Capital",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "firstminute-capital",
+    "jobs": 0
+  },
+  {
+    "name": "Entrepreneur First",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "ef",
+    "jobs": 0
+  },
+  {
+    "name": "Antler",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "antler",
+    "jobs": 0
+  },
+  {
+    "name": "General Catalyst",
+    "category": "vc",
+    "status": "empty",
+    "ats": "greenhouse",
+    "slug": "generalcatalyst",
+    "jobs": 0
+  },
+  {
+    "name": "Lightspeed",
+    "category": "vc",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "lightspeed",
+    "jobs": 3
+  },
+  {
+    "name": "Bessemer Venture Partners",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Sequoia Capital",
+    "category": "vc",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "sequoia",
+    "jobs": 8
+  },
+  {
+    "name": "Andreessen Horowitz",
+    "category": "vc",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "a16z",
+    "jobs": 18
+  },
+  {
+    "name": "Creator Fund",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "creator-fund",
+    "jobs": 0
+  },
+  {
+    "name": "Episode 1",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Octopus Ventures",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "octopus-ventures",
+    "jobs": 0
+  },
+  {
+    "name": "United Ventures",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "P101",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "360 Capital",
+    "category": "vc",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "360capital",
+    "jobs": 0
+  },
+  {
+    "name": "CDP Venture Capital",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Primo Ventures",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "LVenture Group",
+    "category": "vc",
+    "status": "not_found"
+  },
+  {
+    "name": "Hg",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Permira",
+    "category": "pe",
+    "status": "empty",
+    "ats": "greenhouse",
+    "slug": "permira",
+    "jobs": 0
+  },
+  {
+    "name": "Cinven",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "EQT",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Bridgepoint",
+    "category": "pe",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "bridgepoint",
+    "jobs": 0
+  },
+  {
+    "name": "CVC Capital Partners",
+    "category": "pe",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "cvc",
+    "jobs": 0
+  },
+  {
+    "name": "Apax Partners",
+    "category": "pe",
+    "status": "ok",
+    "ats": "recruitee",
+    "slug": "apax",
+    "jobs": 3
+  },
+  {
+    "name": "Vitruvian Partners",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Inflexion",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "ICG",
+    "category": "pe",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "icg",
+    "jobs": 0
+  },
+  {
+    "name": "3i",
+    "category": "pe",
+    "status": "empty",
+    "ats": "workable",
+    "slug": "3i",
+    "jobs": 0
+  },
+  {
+    "name": "Ardian",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "TA Associates",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "General Atlantic",
+    "category": "pe",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "generalatlantic",
+    "jobs": 11
+  },
+  {
+    "name": "Warburg Pincus",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "KKR",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Carlyle",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Advent International",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Triton Partners",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Nordic Capital",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Investindustrial",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Clessidra",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "BC Partners",
+    "category": "pe",
+    "status": "ok",
+    "ats": "recruitee",
+    "slug": "bcpartners",
+    "jobs": 2
+  },
+  {
+    "name": "Montagu",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Oakley Capital",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Livingbridge",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Hayfin",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Pollen Street",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Highland Europe",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Summit Partners",
+    "category": "pe",
+    "status": "not_found"
+  },
+  {
+    "name": "Insight Partners",
+    "category": "pe",
+    "status": "empty",
+    "ats": "ashby",
+    "slug": "insightpartners",
+    "jobs": 0
+  },
+  {
+    "name": "Evercore",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Lazard",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Rothschild & Co",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "PJT Partners",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Moelis",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Centerview Partners",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Perella Weinberg",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Houlihan Lokey",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Jefferies",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "DC Advisory",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Lincoln International",
+    "category": "ib",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "lincolninternational",
+    "jobs": 37
+  },
+  {
+    "name": "Alantra",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Mediobanca",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Equita",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "Arma Partners",
+    "category": "ib",
+    "status": "not_found"
+  },
+  {
+    "name": "GP Bullhound",
+    "category": "ib",
+    "status": "empty",
+    "ats": "recruitee",
+    "slug": "gpbullhound",
+    "jobs": 0
+  },
+  {
+    "name": "Simon-Kucher",
+    "category": "strategy",
+    "status": "empty",
+    "ats": "recruitee",
+    "slug": "simonkucher",
+    "jobs": 0
+  },
+  {
+    "name": "OC&C",
+    "category": "strategy",
+    "status": "not_found"
+  },
+  {
+    "name": "LEK Consulting",
+    "category": "strategy",
+    "status": "not_found"
+  },
+  {
+    "name": "Oliver Wyman",
+    "category": "strategy",
+    "status": "ok",
+    "ats": "lever",
+    "slug": "oliverwyman",
+    "jobs": 2
+  },
+  {
+    "name": "Roland Berger",
+    "category": "strategy",
+    "status": "not_found"
+  },
+  {
+    "name": "Kearney",
+    "category": "strategy",
+    "status": "not_found"
+  },
+  {
+    "name": "Optiver",
+    "category": "trading",
+    "status": "empty",
+    "ats": "greenhouse",
+    "slug": "optiver",
+    "jobs": 0
+  },
+  {
+    "name": "IMC Trading",
+    "category": "trading",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "imc",
+    "jobs": 171
+  },
+  {
+    "name": "Hudson River Trading",
+    "category": "trading",
+    "status": "empty",
+    "ats": "ashby",
+    "slug": "hrt",
+    "jobs": 0
+  },
+  {
+    "name": "Jane Street",
+    "category": "trading",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "janestreet",
+    "jobs": 229
+  },
+  {
+    "name": "Citadel",
+    "category": "trading",
+    "status": "not_found"
+  },
+  {
+    "name": "Flow Traders",
+    "category": "trading",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "flowtraders",
+    "jobs": 47
+  },
+  {
+    "name": "Susquehanna",
+    "category": "trading",
+    "status": "ok",
+    "ats": "personio",
+    "slug": "sig",
+    "jobs": 2
+  },
+  {
+    "name": "Revolut",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Monzo",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "monzo",
+    "jobs": 72
+  },
+  {
+    "name": "Wise",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "wise",
+    "jobs": 16
+  },
+  {
+    "name": "Stripe",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "stripe",
+    "jobs": 708
+  },
+  {
+    "name": "Deliveroo",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "deliveroo",
+    "jobs": 156
+  },
+  {
+    "name": "Checkout.com",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "GoCardless",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "gocardless",
+    "jobs": 25
+  },
+  {
+    "name": "Ramp",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "ramp",
+    "jobs": 156
+  },
+  {
+    "name": "Palantir",
+    "category": "tech",
+    "status": "ok",
+    "ats": "lever",
+    "slug": "palantir",
+    "jobs": 320
+  },
+  {
+    "name": "Tide",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "tide",
+    "jobs": 89
+  },
+  {
+    "name": "Zopa",
+    "category": "tech",
+    "status": "ok",
+    "ats": "lever",
+    "slug": "zopa",
+    "jobs": 34
+  },
+  {
+    "name": "Starling Bank",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Lendable",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "lendable",
+    "jobs": 69
+  },
+  {
+    "name": "Cleo",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "cleo",
+    "jobs": 5
+  },
+  {
+    "name": "Marshmallow",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "marshmallow",
+    "jobs": 11
+  },
+  {
+    "name": "TrueLayer",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "truelayer",
+    "jobs": 3
+  },
+  {
+    "name": "Primer",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "primer",
+    "jobs": 26
+  },
+  {
+    "name": "Yapily",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Thought Machine",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Quantexa",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "quantexa",
+    "jobs": 34
+  },
+  {
+    "name": "Synthesia",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "synthesia",
+    "jobs": 52
+  },
+  {
+    "name": "ElevenLabs",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "elevenlabs",
+    "jobs": 194
+  },
+  {
+    "name": "Wayve",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "wayve",
+    "jobs": 199
+  },
+  {
+    "name": "Faculty",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "faculty",
+    "jobs": 73
+  },
+  {
+    "name": "Cognism",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "cognism",
+    "jobs": 17
+  },
+  {
+    "name": "Beamery",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "beamery",
+    "jobs": 5
+  },
+  {
+    "name": "Multiverse",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "multiverse",
+    "jobs": 18
+  },
+  {
+    "name": "Octopus Energy",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Kraken",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "krakentech",
+    "jobs": 60
+  },
+  {
+    "name": "Paddle",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "paddle",
+    "jobs": 22
+  },
+  {
+    "name": "Cera",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Onfido",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Improbable",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "improbable",
+    "jobs": 4
+  },
+  {
+    "name": "PhysicsX",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "physicsx",
+    "jobs": 41
+  },
+  {
+    "name": "Nothing",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "nothing",
+    "jobs": 9
+  },
+  {
+    "name": "Isomorphic Labs",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "isomorphiclabs",
+    "jobs": 32
+  },
+  {
+    "name": "Helsing",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "helsing",
+    "jobs": 160
+  },
+  {
+    "name": "Satispay",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "satispay",
+    "jobs": 104
+  },
+  {
+    "name": "Scalapay",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Bending Spoons",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Moneyfarm",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Prima",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Casavo",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Yoox Net-a-Porter",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Everli",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Treedom",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Conio",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Qonto",
+    "category": "tech",
+    "status": "ok",
+    "ats": "lever",
+    "slug": "qonto",
+    "jobs": 39
+  },
+  {
+    "name": "Jobtech",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Soldo",
+    "category": "tech",
+    "status": "empty",
+    "ats": "personio",
+    "slug": "soldo",
+    "jobs": 0
+  },
+  {
+    "name": "Musixmatch",
+    "category": "tech",
+    "status": "ok",
+    "ats": "lever",
+    "slug": "musixmatch",
+    "jobs": 4
+  },
+  {
+    "name": "Cortilia",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Nuvolar",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "nuvolar",
+    "jobs": 2
+  },
+  {
+    "name": "Fiscozen",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Aporti",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "N26",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "n26",
+    "jobs": 58
+  },
+  {
+    "name": "Klarna",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Spotify",
+    "category": "tech",
+    "status": "ok",
+    "ats": "lever",
+    "slug": "spotify",
+    "jobs": 81
+  },
+  {
+    "name": "Adyen",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "adyen",
+    "jobs": 207
+  },
+  {
+    "name": "Mollie",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "mollie",
+    "jobs": 43
+  },
+  {
+    "name": "Bolt",
+    "category": "tech",
+    "status": "ok",
+    "ats": "personio",
+    "slug": "bolt",
+    "jobs": 1
+  },
+  {
+    "name": "Glovo",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Doctolib",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "doctolib",
+    "jobs": 153
+  },
+  {
+    "name": "Alan",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "alan",
+    "jobs": 116
+  },
+  {
+    "name": "Pennylane",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "pennylane",
+    "jobs": 149
+  },
+  {
+    "name": "Pigment",
+    "category": "tech",
+    "status": "ok",
+    "ats": "lever",
+    "slug": "pigment",
+    "jobs": 137
+  },
+  {
+    "name": "Dataiku",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "dataiku",
+    "jobs": 23
+  },
+  {
+    "name": "Mistral AI",
+    "category": "tech",
+    "status": "empty",
+    "ats": "lever",
+    "slug": "mistral",
+    "jobs": 0
+  },
+  {
+    "name": "Trade Republic",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "traderepublic",
+    "jobs": 1
+  },
+  {
+    "name": "Scalable Capital",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Personio",
+    "category": "tech",
+    "status": "ok",
+    "ats": "recruitee",
+    "slug": "personio",
+    "jobs": 1
+  },
+  {
+    "name": "Celonis",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "celonis",
+    "jobs": 249
+  },
+  {
+    "name": "Contentful",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "contentful",
+    "jobs": 20
+  },
+  {
+    "name": "DeepL",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "deepl",
+    "jobs": 20
+  },
+  {
+    "name": "n8n",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "n8n",
+    "jobs": 36
+  },
+  {
+    "name": "Pleo",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "pleo",
+    "jobs": 32
+  },
+  {
+    "name": "Vinted",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Too Good To Go",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "toogoodtogo",
+    "jobs": 41
+  },
+  {
+    "name": "SumUp",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "sumup",
+    "jobs": 343
+  },
+  {
+    "name": "Bitpanda",
+    "category": "tech",
+    "status": "ok",
+    "ats": "greenhouse",
+    "slug": "bitpanda",
+    "jobs": 22
+  },
+  {
+    "name": "Lovable",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "lovable",
+    "jobs": 78
+  },
+  {
+    "name": "Legora",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "legora",
+    "jobs": 271
+  },
+  {
+    "name": "Black Forest Labs",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Photoroom",
+    "category": "tech",
+    "status": "ok",
+    "ats": "ashby",
+    "slug": "photoroom",
+    "jobs": 14
+  },
+  {
+    "name": "Swile",
+    "category": "tech",
+    "status": "ok",
+    "ats": "lever",
+    "slug": "swile",
+    "jobs": 32
+  },
+  {
+    "name": "Payhawk",
+    "category": "tech",
+    "status": "ok",
+    "ats": "personio",
+    "slug": "payhawk",
+    "jobs": 3
+  },
+  {
+    "name": "Factorial",
+    "category": "tech",
+    "status": "not_found"
+  },
+  {
+    "name": "Travelperk",
+    "category": "tech",
+    "status": "not_found"
+  }
+]

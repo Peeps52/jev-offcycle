@@ -9,6 +9,7 @@ glancing at one that turns out to be irrelevant costs seconds.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
@@ -106,7 +107,23 @@ def _score_level(d: Decision, qid: str) -> tuple[float, int]:
     return float(a.get("score", 0.0)), len(a.get("legend") or {}) or 1
 
 
+def _title_too_early(listing: Listing, profile: CandidateProfile) -> str | None:
+    """A year in the title is the hardest date evidence a posting carries, and
+    it is free to read. "French Intern | January 2026" had an empty description
+    and the model put it at 0.32 -- a lapsed internship shortlisted at 1.00.
+    Every year named in the title predating the availability year is a
+    certain conflict; no API call needed."""
+    years = [int(y) for y in re.findall(r"\b(20[2-3]\d)\b", listing.title)]
+    avail = int(profile.available_from[:4])
+    if years and max(years) < avail:
+        return f"title dates the role to {max(years)}, before {profile.available_from}"
+    return None
+
+
 def classify(listing: Listing, profile: CandidateProfile, client: JevClient | None = None) -> Result:
+    early = _title_too_early(listing, profile)
+    if early:
+        return Result(listing=listing, verdict="reject", score=0.0, reasons=[early])
     client = client or JevClient()
     state = {"posting": listing.as_state()}
     if profile.cv_summary.strip():
@@ -140,13 +157,24 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
 
     # A listing with no stated start date is a question, not a rejection --
     # most early-stage funds simply do not publish one.
+    # A NOTE, not a block. It used to force review, and forced review cannot
+    # become shortlist -- while ATS postings almost never state a start date
+    # (3 of 56 in the first real run). So ~95% of listings could never
+    # shortlist however good they were. That was a large part of why every
+    # run came back with zero shortlists.
     if decision.noul("start_date_stated") < 0.5:
-        forced_review = True
         reasons.append("no start date given — confirm timing before applying")
 
     # --- fit score ------------------------------------------------------
-    sector = decision.noul("is_target_sector")
-    early = decision.noul("is_early_stage")
+    fn, fn_conf = decision.choice("role_function")
+    fn_probs = decision.probabilities("role_function")
+    wanted_fn = set(profile.target_functions)
+    function = (sum(p for k, p in fn_probs.items() if k in wanted_fn) if fn_probs
+                else (1.0 if fn in wanted_fn else 0.0))
+    if fn == "unclear":          # unknown is not wrong -- same rule as programme
+        function = 0.5
+        forced_review = True
+    entry = decision.noul("entry_level")
     kind, kind_conf = decision.choice("role_kind")
 
     # Programme match replaces the old `is_offcycle` noul. The probability
@@ -186,7 +214,9 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
     def _g(x: float, w: float) -> float:
         return max(x, 0.01) ** w
 
-    score = _g(programme, 0.5) * _g(sector, 0.3) * _g(early, 0.2)
+    # Right programme, right kind of work, right seniority -- all three
+    # needed, so still geometric. Employer type is no longer a factor at all.
+    score = _g(programme, 0.4) * _g(function, 0.4) * _g(entry, 0.2)
 
     # Technical depth was previously computed and then ignored -- an API call
     # paid for on every listing that changed nothing. It is a modest bonus,
@@ -217,7 +247,7 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
         verdict = "review"
     else:
         verdict = "reject"
-        reasons.append(f"weak fit ({kind} {programme:.2f}, sector {sector:.2f})")
+        reasons.append(f"weak fit ({kind} {programme:.2f}, {fn} {function:.2f}, entry {entry:.2f})")
 
     # --- candidacy: a SEPARATE axis, deliberately not folded into `score` ----
     # Role fit and competitiveness are different questions. A role can be
@@ -236,12 +266,19 @@ def classify(listing: Listing, profile: CandidateProfile, client: JevClient | No
                             "employer_scale": scale}
         if meets < 0.4:
             reasons.append(f"may not meet stated requirements (p={meets:.2f})")
+        # Candidacy stays its own axis and is never folded into `score`. But
+        # a role you are clearly ineligible for should not be presented as a
+        # shortlist -- that is exactly the BlackRock case (penultimate-year
+        # only, you graduate in January). It drops to review, reason visible.
+        if meets < 0.3 and verdict == "shortlist":
+            verdict = "review"
+            reasons.insert(0, "strong role fit, but eligibility looks unmet")
         if exp >= 0.66:
             reasons.append(f"strong experience match ({scale})")
 
     if verdict == "shortlist":
         reasons.insert(
-            0, f"{kind} {programme:.2f} · sector {sector:.2f} · early-stage {early:.2f}"
+            0, f"{kind} {programme:.2f} · {fn} {function:.2f} · entry-level {entry:.2f}"
         )
 
     return Result(

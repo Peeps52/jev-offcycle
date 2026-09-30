@@ -1,37 +1,452 @@
 [
   {
-    "ats": "lever",
-    "slug": "palantir",
-    "name": "Palantir"
+    "ats": "personio",
+    "slug": "northzone",
+    "name": "Northzone",
+    "category": "vc"
+  },
+  {
+    "ats": "recruitee",
+    "slug": "pointnine",
+    "name": "Point Nine",
+    "category": "vc"
+  },
+  {
+    "ats": "personio",
+    "slug": "lakestar",
+    "name": "Lakestar",
+    "category": "vc"
+  },
+  {
+    "ats": "ashby",
+    "slug": "lightspeed",
+    "name": "Lightspeed",
+    "category": "vc"
+  },
+  {
+    "ats": "ashby",
+    "slug": "sequoia",
+    "name": "Sequoia Capital",
+    "category": "vc"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "a16z",
+    "name": "Andreessen Horowitz",
+    "category": "vc"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "generalatlantic",
+    "name": "General Atlantic",
+    "category": "pe"
+  },
+  {
+    "ats": "recruitee",
+    "slug": "bcpartners",
+    "name": "BC Partners",
+    "category": "pe"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "lincolninternational",
+    "name": "Lincoln International",
+    "category": "ib"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "imc",
+    "name": "IMC Trading",
+    "category": "trading"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "janestreet",
+    "name": "Jane Street",
+    "category": "trading"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "flowtraders",
+    "name": "Flow Traders",
+    "category": "trading"
   },
   {
     "ats": "greenhouse",
     "slug": "monzo",
-    "name": "Monzo"
+    "name": "Monzo",
+    "category": "tech"
   },
   {
     "ats": "greenhouse",
     "slug": "wise",
-    "name": "Wise"
+    "name": "Wise",
+    "category": "tech"
   },
   {
-    "ats": "lever",
-    "slug": "checkout",
-    "name": "Checkout.com"
+    "ats": "greenhouse",
+    "slug": "stripe",
+    "name": "Stripe",
+    "category": "tech"
   },
   {
     "ats": "greenhouse",
     "slug": "deliveroo",
-    "name": "Deliveroo"
+    "name": "Deliveroo",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "gocardless",
+    "name": "GoCardless",
+    "category": "tech"
   },
   {
     "ats": "ashby",
     "slug": "ramp",
-    "name": "Ramp"
+    "name": "Ramp",
+    "category": "tech"
+  },
+  {
+    "ats": "lever",
+    "slug": "palantir",
+    "name": "Palantir",
+    "category": "tech"
   },
   {
     "ats": "greenhouse",
-    "slug": "definitely-not-a-real-board-xyz",
-    "name": "Broken (deliberate)"
+    "slug": "tide",
+    "name": "Tide",
+    "category": "tech"
+  },
+  {
+    "ats": "lever",
+    "slug": "zopa",
+    "name": "Zopa",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "lendable",
+    "name": "Lendable",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "marshmallow",
+    "name": "Marshmallow",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "truelayer",
+    "name": "TrueLayer",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "primer",
+    "name": "Primer",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "quantexa",
+    "name": "Quantexa",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "synthesia",
+    "name": "Synthesia",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "elevenlabs",
+    "name": "ElevenLabs",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "wayve",
+    "name": "Wayve",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "faculty",
+    "name": "Faculty",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "cognism",
+    "name": "Cognism",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "beamery",
+    "name": "Beamery",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "multiverse",
+    "name": "Multiverse",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "krakentech",
+    "name": "Kraken",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "paddle",
+    "name": "Paddle",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "improbable",
+    "name": "Improbable",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "physicsx",
+    "name": "PhysicsX",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "nothing",
+    "name": "Nothing",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "isomorphiclabs",
+    "name": "Isomorphic Labs",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "helsing",
+    "name": "Helsing",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "satispay",
+    "name": "Satispay",
+    "category": "tech"
+  },
+  {
+    "ats": "lever",
+    "slug": "qonto",
+    "name": "Qonto",
+    "category": "tech"
+  },
+  {
+    "ats": "lever",
+    "slug": "musixmatch",
+    "name": "Musixmatch",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "nuvolar",
+    "name": "Nuvolar",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "n26",
+    "name": "N26",
+    "category": "tech"
+  },
+  {
+    "ats": "lever",
+    "slug": "spotify",
+    "name": "Spotify",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "adyen",
+    "name": "Adyen",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "mollie",
+    "name": "Mollie",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "doctolib",
+    "name": "Doctolib",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "alan",
+    "name": "Alan",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "pennylane",
+    "name": "Pennylane",
+    "category": "tech"
+  },
+  {
+    "ats": "lever",
+    "slug": "pigment",
+    "name": "Pigment",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "dataiku",
+    "name": "Dataiku",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "traderepublic",
+    "name": "Trade Republic",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "celonis",
+    "name": "Celonis",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "contentful",
+    "name": "Contentful",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "deepl",
+    "name": "DeepL",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "n8n",
+    "name": "n8n",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "pleo",
+    "name": "Pleo",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "toogoodtogo",
+    "name": "Too Good To Go",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "sumup",
+    "name": "SumUp",
+    "category": "tech"
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "bitpanda",
+    "name": "Bitpanda",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "lovable",
+    "name": "Lovable",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "legora",
+    "name": "Legora",
+    "category": "tech"
+  },
+  {
+    "ats": "ashby",
+    "slug": "photoroom",
+    "name": "Photoroom",
+    "category": "tech"
+  },
+  {
+    "ats": "lever",
+    "slug": "swile",
+    "name": "Swile",
+    "category": "tech"
+  },
+  {
+    "ats": "personio",
+    "slug": "payhawk",
+    "name": "Payhawk",
+    "category": "tech"
+  },
+  {
+    "ats": "workday",
+    "slug": "blackrock|wd1|BlackRock_Professional",
+    "name": "BlackRock",
+    "category": "pe"
+  },
+  {
+    "ats": "workday",
+    "slug": "blackstone|wd1|Blackstone_Campus_Careers",
+    "name": "Blackstone",
+    "category": "pe"
+  },
+  {
+    "ats": "workday",
+    "slug": "barclays|wd3|External_Career_Site_Barclays",
+    "name": "Barclays",
+    "category": "ib"
+  },
+  {
+    "ats": "workday",
+    "slug": "lseg|wd3|Careers",
+    "name": "LSEG",
+    "category": "tech"
+  },
+  {
+    "ats": "workday",
+    "slug": "guggenheim|wd1|Guggenheim_Careers_Campus",
+    "name": "Guggenheim Securities",
+    "category": "ib"
+  },
+  {
+    "ats": "workday",
+    "slug": "pjtpartners|wd1|Students",
+    "name": "PJT Partners",
+    "category": "ib"
+  },
+  {
+    "ats": "workday",
+    "slug": "hl|wd1|Campus",
+    "name": "Houlihan Lokey",
+    "category": "ib"
+  },
+  {
+    "ats": "consider",
+    "slug": "careers.balderton.com",
+    "name": "Balderton portfolio",
+    "category": "vc-portfolio"
   }
 ]

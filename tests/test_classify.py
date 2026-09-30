@@ -29,7 +29,6 @@ PROFILE = CandidateProfile(
     available_from="2027-01-22",
     availability_note="Final examination is on 21 January 2027.",
     right_to_work=["United Kingdom", "European Union"],
-    target_sectors=["venture capital", "early-stage technology investing"],
 )
 
 
@@ -49,8 +48,9 @@ class _FakeClient:
 
 def _full(**over):
     base = {
-        "is_target_sector": {"type": "noul", "noul": 0.95},
-        "is_early_stage": {"type": "noul", "noul": 0.9},
+        "role_function": {"type": "choice", "choice": "venture_capital", "confidence": 0.9,
+                          "probabilities": {"venture_capital": 0.9, "other": 0.1}},
+        "entry_level": {"type": "noul", "noul": 0.9},
         "starts_too_early": {"type": "noul", "noul": 0.05},
         "has_visa_barrier": {"type": "noul", "noul": 0.05},
         "start_date_stated": {"type": "noul", "noul": 0.95},
@@ -102,7 +102,9 @@ def test_missing_start_date_routes_to_review_not_reject():
             starts_too_early={"type": "noul", "noul": 0.20},
         )
     )
-    assert r.verdict == "review"
+    # Was `== "review"` -- which encoded the bug. The intent was always
+    # "never reject for a missing date"; a note, not a block.
+    assert r.verdict != "reject"
     assert any("no start date" in x for x in r.reasons)
 
 
@@ -229,8 +231,9 @@ def test_right_programme_at_wrong_firm_is_rejected():
     """
     r = _run(
         _full(
-            is_target_sector={"type": "noul", "noul": 0.05},
-            is_early_stage={"type": "noul", "noul": 0.05},
+            role_function={"type": "choice", "choice": "engineering", "confidence": 0.95,
+                           "probabilities": {"engineering": 0.95, "venture_capital": 0.05}},
+            entry_level={"type": "noul", "noul": 0.9},
         )
     )
     assert r.verdict == "reject", f"wrong-firm listing surfaced at {r.score}"
@@ -248,8 +251,52 @@ def test_unclear_programme_is_unknown_not_wrong():
         _full(
             role_kind={"type": "choice", "choice": "unclear", "confidence": 0.5,
                        "probabilities": {"unclear": 0.9, "offcycle_internship": 0.05}},
-            is_target_sector={"type": "noul", "noul": 0.94},
+            role_function={"type": "choice", "choice": "venture_capital", "confidence": 0.9,
+                           "probabilities": {"venture_capital": 0.94}},
         )
     )
     assert r.verdict == "review", f"unclear listing was {r.verdict}, must be review"
     assert any("unclear" in x for x in r.reasons)
+
+
+# --- regressions from the zero-shortlist investigation (2026-09-29) --------
+
+
+def test_missing_start_date_does_not_block_shortlist():
+    """ATS postings almost never state a start date. When that forced review,
+    ~95% of listings could never shortlist however good they were."""
+    r = _run(_full(start_date_stated={"type": "noul", "noul": 0.05}))
+    assert r.verdict == "shortlist", r.reasons
+    assert any("no start date" in x for x in r.reasons)
+
+
+def test_non_investor_employer_can_shortlist():
+    """The old is_early_stage question scored every non-investor ~0.07 and sank
+    it. A product role at a tech company must be able to shortlist."""
+    r = _run(_full(role_function={"type": "choice", "choice": "product_management",
+                                  "confidence": 0.9,
+                                  "probabilities": {"product_management": 0.9}}))
+    assert r.verdict == "shortlist", (r.score, r.reasons)
+
+
+def test_senior_role_is_rejected():
+    r = _run(_full(entry_level={"type": "noul", "noul": 0.03}))
+    assert r.verdict != "shortlist"
+
+
+def test_title_year_before_availability_rejects_without_api_call():
+    from jev_offcycle.classify import Listing, classify
+    from jev_offcycle.cli import DEFAULT_PROFILE
+
+    class NoCalls:
+        def decide(self, *a, **k):
+            raise AssertionError("should not reach the model")
+
+    r = classify(Listing(title="French Intern | January 2026", organisation="BC Partners"),
+                 DEFAULT_PROFILE, NoCalls())
+    assert r.verdict == "reject" and "2026" in r.reasons[0]
+    # A 2027 title must still go to the model.
+    import pytest
+    with pytest.raises(AssertionError):
+        classify(Listing(title="2027 Off-Cycle Internship", organisation="X"),
+                 DEFAULT_PROFILE, NoCalls())

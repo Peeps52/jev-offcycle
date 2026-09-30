@@ -44,7 +44,15 @@ class CandidateProfile:
     available_from: str  # ISO date, e.g. "2027-01-22"
     availability_note: str  # why -- gives Jev something concrete to reason over
     right_to_work: list[str]  # e.g. ["United Kingdom", "European Union"]
-    target_sectors: list[str]
+    # Which kinds of WORK you want, as keys of FUNCTION_TYPES. Replaces the
+    # old `target_sectors`, which asked "is this employer a VC fund?" -- a
+    # question every non-investor fails, so a perfect product or PE role at a
+    # tech company scored 0.07 and could never surface.
+    target_functions: tuple[str, ...] = (
+        "venture_capital", "private_equity", "investment_banking",
+        "strategy", "business_operations", "product_management",
+        "project_management",
+    )
     # Which programme types you want. Defaults to off-cycle because that is the
     # search nothing else serves, but the engine is indifferent -- pass
     # ["summer_internship"] or ["offcycle_internship", "placement_year"] and
@@ -88,15 +96,49 @@ PROGRAMME_TYPES: dict[str, str] = {
         "A structured entry programme for recent graduates, usually starting "
         "at a fixed annual intake and lasting one to three years."
     ),
-    "permanent_role": "An open-ended full-time position with no fixed end date.",
+    "entry_level_job": (
+        "A full-time position explicitly open to recent graduates or people "
+        "with little experience -- titled Analyst, Associate, Junior, New Grad "
+        "or similar -- without being a structured graduate programme."
+    ),
+    "permanent_role": (
+        "An open-ended full-time position that expects prior professional "
+        "experience beyond internships."
+    ),
     "unclear": "The posting does not give enough information to tell these apart.",
+}
+
+
+# What the role actually DOES day to day. Judged from responsibilities, not
+# the employer: an investment-team analyst at a tech company's corporate
+# venture arm is venture_capital; a strategy role at a bank is strategy.
+FUNCTION_TYPES: dict[str, str] = {
+    "venture_capital": "Sourcing, screening or diligencing early-stage investments",
+    "private_equity": "Buyout or growth-equity investing: deal execution, modelling, portfolio work",
+    "investment_banking": "M&A, ECM, DCM or advisory execution for corporate clients",
+    "strategy": "Strategy, corporate development or consulting-style problem solving",
+    "business_operations": "Business operations, BizOps, commercial or revenue operations analysis",
+    "product_management": "Owning a product's roadmap, requirements and priorities",
+    "project_management": "Running projects or programmes: planning, coordination, delivery",
+    "research_markets": "Equity research, trading, quantitative or markets analysis",
+    "engineering": "Writing software or building technical systems as the core job",
+    "sales_marketing": "Selling, business development, marketing or customer success",
+    # Without these two, recruiting was filed as project_management and
+    # compliance as business_operations -- the nearest wanted bucket wins
+    # when the true one is missing.
+    "people_recruiting": "Recruiting, talent acquisition, HR or people operations",
+    "risk_compliance_finance": (
+        "Compliance, risk, fraud, audit, legal, tax, accounting or in-house "
+        "finance-function work such as FP&A or controlling"
+    ),
+    "other": "None of the above",
+    "unclear": "The posting does not describe the work well enough to tell",
 }
 
 
 def build_questions(profile: CandidateProfile) -> dict[str, dict]:
     """One batch of independent judgements about a single listing."""
     rtw = ", ".join(profile.right_to_work)
-    sectors = ", ".join(profile.target_sectors)
 
     # Candidacy questions are added only when a CV summary is supplied, so the
     # default build stays free of personal data and costs nothing extra.
@@ -155,21 +197,26 @@ def build_questions(profile: CandidateProfile) -> dict[str, dict]:
 
     return {
         **cv,
-        "is_target_sector": {
-            "type": "noul",
+        "role_function": {
+            "type": "choice",
             "instructions": (
-                f"The hiring organisation works in one of these sectors: {sectors}. "
-                "Judge by what the organisation actually does, not by the job "
-                "title. A corporate venture arm or an accelerator counts; a bank's "
-                "general graduate programme does not."
+                "Classify the main kind of work this role does day to day, "
+                "judged from its stated responsibilities rather than from the "
+                "employer's industry or the job title alone."
             ),
+            "criteria": dict(FUNCTION_TYPES),
         },
-        "is_early_stage": {
+        # Seniority, asked directly. Replaces `is_early_stage`, which was an
+        # investor-only question masquerading as a preference: it scored every
+        # non-investor ~0.07 and the geometric mean sank them all.
+        "entry_level": {
             "type": "noul",
             "instructions": (
-                "The hiring organisation invests primarily at pre-seed, seed, or "
-                "Series A stage. Growth-equity, buyout, late-stage, and "
-                "public-markets investors do not satisfy this."
+                "This role is realistically open to a final-year university "
+                "student or recent graduate whose experience is internships. "
+                "Roles requiring several years of full-time experience, or "
+                "titled senior, lead, head, principal, director or manager of "
+                "a team, are not."
             ),
         },
         # --- hard gates ----------------------------------------------------

@@ -41,16 +41,16 @@ DEFAULT_PROFILE = CandidateProfile(
         "on 21 January 2027, and is not available to start before that date."
     ),
     right_to_work=["United Kingdom", "European Union"],
-    target_sectors=[
-        "venture capital",
-        "early-stage technology investing",
-        "startup accelerators",
-    ],
-    # Which programme types you want. Off-cycle is the search nothing else
-    # serves; graduate schemes are included because a Jan-2027 finalist is
-    # eligible for both and there is no reason to hide one.
-    # Also available: "summer_internship", "placement_year", "spring_week".
-    target_programmes=("offcycle_internship", "graduate_scheme"),
+    # Kinds of work, judged from responsibilities -- not employer industry.
+    # A product role at a tech company is as valid as an analyst seat at a fund.
+    target_functions=(
+        "venture_capital", "private_equity", "investment_banking", "strategy",
+        "business_operations", "product_management", "project_management",
+    ),
+    # Off-cycle internships and graduate roles, structured or not. Summer
+    # internships are excluded: they normally require returning students, and
+    # a January-2027 graduate is not one. Candidacy would flag it anyway.
+    target_programmes=("offcycle_internship", "graduate_scheme", "entry_level_job"),
     # Condensed deliberately. Name, email, phone and address are absent --
     # they add nothing to the judgement and this string is sent on every call.
     cv_summary=_load_cv(),
@@ -166,7 +166,11 @@ def crawl_main(argv: list[str] | None = None) -> int:
 
     srcs = load_sources(str(args.sources))
     listings, stats = fetch(srcs)
-    keep = prefilter(listings)
+    # Free filters first, then location priority, THEN --limit. The first real
+    # run applied --limit to board order and spent its budget on Palantir's
+    # US roles while London listings further down were never scored.
+    from .crawl import rank_by_location
+    keep = rank_by_location(prefilter(listings))
 
     con = _store.connect()
     seen = {f"{s.ats}:{s.slug}" for s in srcs}

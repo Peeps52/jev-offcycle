@@ -105,6 +105,61 @@ with *confirm timing before applying* rather than being silently discarded.
 Missing a real opportunity is the expensive error. Glancing at an irrelevant
 listing costs seconds. The thresholds encode that asymmetry.
 
+## Why every early run returned zero shortlists
+
+It was not only the seed list. Five separate defects, each enough on its own:
+
+1. **An investor-only question sank every other employer.** `is_early_stage`
+   asked whether the organisation "invests at pre-seed to Series A". Every
+   non-investor scored ~0.07, and a geometric mean multiplies that into the
+   whole score. A perfect product or PE role could never surface.
+2. **Sector meant "is it a VC fund".** Replaced by `role_function`: what the
+   role *does* — VC, PE, IB, strategy, BizOps, product, project — judged from
+   responsibilities rather than the employer's industry.
+3. **A missing start date forced review, and review cannot become
+   shortlist.** ATS postings almost never state one (3 of 56). It is a note now.
+4. **`--limit` took listings in board order.** 45 of the first 56 scored were
+   Palantir roles in Washington and Honolulu, rejected on visa grounds. Now
+   listings outside Europe are dropped for free and the rest are ranked
+   London/Milan first, *then* limited.
+5. **`robots.txt` handling silently disabled every Ashby board.** Ashby
+   answers robots.txt with 401; Python's parser reads that as disallow-all,
+   RFC 9309 says the opposite. Twenty-odd boards — Ramp, ElevenLabs, Synthesia,
+   Satispay — reported "0 listings", indistinguishable from nothing open.
+   Boards now report `ok`, `empty`, `failed` or `blocked` separately.
+
+A sixth appeared once Workday boards were added, and it was found by reading
+the *rejects*, not the shortlist: Workday's `startDate` is the date a posting
+went live. Mapped to `start_date`, it made Blackstone, PJT, Guggenheim and
+Houlihan Lokey's 2027 programmes — a February-2027 off-cycle included —
+"state" a 2026 start, and the availability gate rejected them at p≈0.9. The
+model was reasoning correctly over a wrong field.
+
+Missing function buckets had a quieter effect. With no recruiting or
+compliance option, talent-acquisition roles were filed as project management
+and compliance roles as business operations, because the nearest wanted bucket
+wins when the true one is absent. `people_recruiting` and
+`risk_compliance_finance` now exist so they can be classified as what they are.
+
+## Sources
+
+`examples/sources.json` is generated, not hand-written. `scripts/probe_sources.py`
+tries each candidate in `scripts/candidates.txt` against every supported ATS
+and keeps only boards that answer with a real job list. Every small match was
+then checked by hand, because subdomain-based ATSs collide: "Frontline" on
+Greenhouse is a Houston oilfield firm, "Apax" on Recruitee is a mental-health
+provider. Rejected matches and why are in `scripts/false_matches.json`.
+
+Supported: Greenhouse, Lever, Ashby, Workable, Recruitee, Personio, Teamtailor,
+SmartRecruiters, **Workday** (most banks and large PE — slug `tenant|wdN|site`)
+and **Consider** VC portfolio boards (slug = board domain, e.g.
+`careers.balderton.com`, ~2,400 portfolio roles).
+
+Not supported yet: **Getro** portfolio boards (Atomico, Seedcamp, Index —
+thousands of roles; the page embeds only the first 20 and does not paginate by
+URL), and in-house careers sites, which is where most VC funds post their own
+analyst roles.
+
 ## Jev API notes
 
 Established empirically on 2026-09-22, because they are not documented

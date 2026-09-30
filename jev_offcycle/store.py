@@ -59,10 +59,17 @@ def listing_id(l) -> str:
     return hashlib.sha1(basis.encode()).hexdigest()[:16]
 
 
+# Bump when the question set or scoring changes. Verdicts are cached per
+# content hash, so without this a listing scored under the old VC-only
+# questions would be served its stale verdict forever.
+SCORING_VERSION = "2026-09-30.functions2"
+
+
 def content_hash(l) -> str:
-    """Changes when the POSTING changes. A reworded description is a different
-    thing to score; an unchanged one is not worth paying for twice."""
-    blob = f"{l.title}|{l.location}|{l.duration}|{l.start_date}|{l.description}"
+    """Changes when the POSTING changes -- or when the scoring does. A
+    reworded description is a different thing to score; an unchanged one
+    under unchanged questions is not worth paying for twice."""
+    blob = f"{SCORING_VERSION}|{l.title}|{l.location}|{l.duration}|{l.start_date}|{l.description}"
     return hashlib.sha1(blob.encode()).hexdigest()[:16]
 
 
